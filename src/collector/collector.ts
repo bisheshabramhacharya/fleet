@@ -259,7 +259,9 @@ export class Collector {
     const out: UnknownFolder[] = [];
     for (const name of names) {
       const candidate = CANDIDATE_FOLDERS.includes(name) || /^\.codex-/.test(name);
-      if (!candidate || covered.has(name)) continue;
+      // Extra Codex homes (~/.codex-*) belong to the Codex reader even before they hold sessions.
+      const owner = /^\.codex-/.test(name) ? ".codex" : name;
+      if (!candidate || covered.has(name) || covered.has(owner)) continue;
       out.push({ device: this.#opts.deviceId, path: path.join(this.#opts.ctx.homeDir, name), guess: name.replace(/^\./, "") });
     }
     return out;
