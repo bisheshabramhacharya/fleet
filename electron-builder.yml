@@ -1,0 +1,40 @@
+appId: dev.bishesha.fleet
+productName: fleet
+copyright: Copyright (c) 2026 bishesha
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/**/*
+  - "!dist/**/*.map"
+  - package.json
+asar: true
+extraMetadata:
+  main: dist/main.cjs
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: build/icon.png
+nsis:
+  oneClick: true
+  perMachine: false
+  allowElevation: false
+  artifactName: fleet-setup-${version}.${ext}
+mac:
+  target:
+    - target: dmg
+    - target: zip
+  category: public.app-category.developer-tools
+  icon: build/icon.png
+  identity: null
+  artifactName: fleet-${version}-${arch}.${ext}
+linux:
+  target: [AppImage]
+  category: Development
+  icon: build/icon.png
+publish:
+  provider: github
+  owner: bisheshabramhacharya
+  repo: fleet
+  releaseType: draft
